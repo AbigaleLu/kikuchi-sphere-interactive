@@ -7,6 +7,7 @@ function harness(options={}){
  const elements={},docEvents={},winEvents={},frames=new Map(),requests=[],active=new Set(),blobs=new Map();
  let id=0,aborted=0,closed=0,draws=0,clipboard='';
  const bounds={left:0,top:0,width:options.width||390,height:options.height||480};
+ const previewTransforms=[];
  const surfaces={viewer:createCanvas(bounds.width,bounds.height),'face-preview':createCanvas(512,512)};
  const faults=new Set();
  class Element{
@@ -17,7 +18,7 @@ function harness(options={}){
  }
  const el=id=>elements[id]||(elements[id]=new Element());
  for(const [id,surface]of Object.entries(surfaces)){
-  const native=surface.getContext('2d'),context=new Proxy(native,{get(t,key){if(key==='drawImage')return(image,...args)=>{assert(!image.disposed,'drawing disposed image');draws++;return t.drawImage(image,...args);};const value=t[key];return typeof value==='function'?value.bind(t):value;},set(t,key,v){t[key]=v;return true;}});
+  const native=surface.getContext('2d'),context=new Proxy(native,{get(t,key){if(key==='drawImage')return(image,...args)=>{assert(!image.disposed,'drawing disposed image');draws++;if(id==='face-preview')previewTransforms.push(t.getTransform());return t.drawImage(image,...args);};const value=t[key];return typeof value==='function'?value.bind(t):value;},set(t,key,v){t[key]=v;return true;}});
   el(id).getContext=()=>context;
   Object.defineProperties(el(id),{width:{get:()=>surface.width,set:v=>surface.width=v},height:{get:()=>surface.height,set:v=>surface.height=v}});
  }
@@ -48,10 +49,10 @@ function harness(options={}){
  vm.createContext(sandbox);
  for(const file of ['model-drawings.js','model-lite.js','texture-loader-lite.js','viewer-lite.js']){
   let source=fs.readFileSync(path.join(root,file),'utf8');
-  if(file==='viewer-lite.js')source=source.replace(/\}\)\(\);\s*$/,'window.probe={get q(){return q},get zoom(){return zoom},get key(){return textureKey()},get ready(){return ready},get selected(){return selected},get faces(){return data.faces},get pointers(){return pointers},rotate,frontFace};})();');
+  if(file==='viewer-lite.js')source=source.replace(/\}\)\(\);\s*$/,'window.probe={get q(){return q},get zoom(){return zoom},get key(){return textureKey()},get ready(){return ready},get selected(){return selected},get faces(){return data.faces},get pointers(){return pointers},rotate,frontFace,drawPreview};})();');
   vm.runInContext(source,sandbox);
  }
- const h={el,buttons,sandbox,document,docEvents,winEvents,requests,active,frames,faults,probe:sandbox.window.probe,
+ const h={surfaces,previewTransforms,el,buttons,sandbox,document,docEvents,winEvents,requests,active,frames,faults,probe:sandbox.window.probe,
   get aborted(){return aborted;},get closed(){return closed;},get draws(){return draws;},get clipboard(){return clipboard;},
   flush(){for(let n=0;n<3&&frames.size;n++){const pending=[...frames.values()];frames.clear();pending.forEach(fn=>fn(100+n*16));}},
   async ready(){await until(()=>el('loading').hidden&&el('detail-status').textContent==='高清细节已载入');h.flush();},
@@ -153,4 +154,31 @@ test('sharing offers a selectable URL when clipboard permission is unavailable',
  const h=harness({clipboardFailure:true});try{await h.ready();await h.el('share').handlers.click();
  assert.equal(h.el('share-fallback').hidden,false);assert.match(h.el('share-fallback').value,/edition=teaching&crystal=FCC/);assert.match(h.el('share-status').textContent,/请复制/);
  }finally{h.close();}
+});
+
+
+test('all 104 local previews keep the center text upright and the entire image inside the canvas',async()=>{
+ const sheet=createCanvas(8*210,13*230),sc=sheet.getContext('2d');sc.fillStyle='#fff';sc.fillRect(0,0,sheet.width,sheet.height);
+ let cell=0;
+ for(const edition of ['teaching','day'])for(const crystal of ['FCC','BCC']){
+  const h=harness({query:`?edition=${edition}&crystal=${crystal}`});
+  try{await h.ready();
+   for(let i=0;i<26;i++){
+    h.el('face-picker').handlers.change({target:{value:String(i)}});await h.ready();
+    const m=h.previewTransforms.at(-1),face=h.probe.faces[i];
+    const [dx,dy]=edition==='day'?face.textDirections[crystal]:[1,0];
+    assert(Math.abs(m.b*dx+m.d*dy)<1e-5,`${edition} ${crystal} ${i}: text is tilted`);
+    assert(m.a*dx+m.c*dy>0,`${edition} ${crystal} ${i}: text is upside down`);
+    const [w,height]=h.sandbox.window.KIKUCHI_LITE.sets[h.probe.key].faces[i].size;
+    for(const [x,y]of [[0,0],[w,0],[0,height],[w,height]]){
+     const px=m.a*x+m.c*y+m.e,py=m.b*x+m.d*y+m.f;
+     assert(px>=-.001&&px<=512.001&&py>=-.001&&py<=512.001,'preview clipped');
+    }
+    const x=cell%8*210,y=Math.floor(cell/8)*230;
+    sc.drawImage(h.surfaces['face-preview'],x,y,200,200);sc.fillStyle='#111';sc.font='14px sans-serif';sc.fillText(`${edition} ${crystal} #${i}`,x+5,y+218);cell++;
+    assert.equal(h.active.size,2);
+   }
+  }finally{h.close();}
+ }
+ fs.writeFileSync(path.join(output,'all-preview-directions.png'),sheet.toBuffer('image/png'));
 });
