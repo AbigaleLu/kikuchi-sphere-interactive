@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="由新增 JPG 图纸构成的 FCC / BCC 菊池球数字教学模型，支持离线旋转、缩放与单面观察。">
+  <title>菊池球 · 手机轻量版</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-lite.css">
+  <script src="model-drawings.js" defer></script>
+  <script src="model-lite.js" defer></script>
+  <script src="texture-loader-lite.js" defer></script>
+  <script src="viewer-lite.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div class="identity"><svg aria-hidden="true" viewBox="0 0 32 32"><path d="M16 2 28 9v14l-12 7L4 23V9Z M4 9l12 7 12-7M16 16v14M16 2v8M4 23l7-4M28 23l-7-4"/></svg><h1>菊池球<span>数字教学模型</span></h1></div>
+    <span class="version">轻量版 <span>·</span> V0.3</span>
+  </header>
+  <main>
+    <section class="stage" aria-label="菊池球三维观察区">
+      <div class="stage-top"><span class="model-tag" id="model-tag">FCC <span>面心立方</span></span><span class="geometry-tag">26 面 · 原图色彩</span></div>
+      <canvas id="viewer" tabindex="0" aria-label="菊池球模型。拖动或按方向键旋转，滚轮或加减键缩放，点击表面查看图案，Home 键复位。"></canvas>
+      <div id="loading" class="loading" role="status"><span id="loading-message">正在载入球体…</span><button id="retry-model" type="button" hidden>重新加载</button></div>
+      <noscript><p class="loading">请在浏览器中启用 JavaScript 以查看可旋转模型。</p></noscript>
+      <div class="stage-bottom"><span>拖动旋转 <i>·</i> 滚轮 / 双指缩放 <i>·</i> 点击查看单面</span><button id="reset" class="reset" type="button" title="快捷键 Home">↺ <span>复位视图</span></button></div>
+    </section>
+    <aside class="panel" aria-label="模型观察控制">
+      <section class="control-block">
+        <h2>图纸版本</h2>
+        <div class="segmented" aria-label="选择图纸版本"><button type="button" data-edition="new" aria-pressed="true">新增图纸</button><button type="button" data-edition="original" aria-pressed="false">原版 PDF</button></div>
+        <p class="detail">切换时保留角度与缩放，方便对照。</p>
+      </section>
+      <section class="control-block">
+        <h2>晶体类型</h2>
+        <div class="segmented" aria-label="选择晶体类型"><button type="button" data-model="FCC" aria-pressed="true">FCC</button><button type="button" data-model="BCC" aria-pressed="false">BCC</button></div>
+        <p class="detail" id="model-description">FCCpage1 + FCCpage2 · 两页组成一个球</p>
+      </section>
+      <section class="control-block">
+        <div class="row"><h2>观察视图</h2><button type="button" id="spin" class="text-button" aria-pressed="false">自动旋转</button></div>
+        <div class="views" aria-label="观察方向"><button type="button" data-view="001">[001]</button><button type="button" data-view="110">[110]</button><button type="button" data-view="111">[111]</button></div>
+        <div class="row zoom-row"><label for="zoom">缩放</label><output for="zoom" id="zoom-value">100%</output></div>
+        <div class="zoom-control"><button id="zoom-out" aria-label="缩小" type="button">−</button><input id="zoom" type="range" min="55" max="260" step="1" value="100" aria-label="模型缩放比例"><button id="zoom-in" aria-label="放大" type="button">+</button></div>
+      </section>
+      <section class="control-block face-block">
+        <div class="row"><h2>单面图案</h2><span id="face-label" class="face-label">—</span></div>
+        <div class="face-preview"><canvas id="face-preview" width="512" height="512" role="img" aria-label="当前选中面的图案"></canvas></div>
+        <p class="detail" id="face-description">点击模型表面，可在这里仔细查看。</p>
+        <p class="detail" id="detail-status" role="status"></p><button id="retry-detail" class="text-button" type="button" hidden>重试高清图</button>
+      </section>
+      <section id="legend-block" class="legend-block" hidden aria-label="PDF 原图晶面族图例"><h2>晶面族</h2><div id="legend" class="legend"></div></section>
+      <footer class="source-note"><span id="source-note">图案取自新增 JPG 图纸，保留原有线条、标签与色彩。</span><div id="source-links"></div><a href="index-drawings.html">打开原完整对照版 ↗</a><small id="source-credit">新增图纸的来源文字见原图。</small></footer>
+    </aside>
+  </main>
+</body>
+</html>
