@@ -112,8 +112,6 @@
     $('face-preview').alt=`${edition==='teaching'?'低指数简明版':'Austin P. Day 原图版'} ${model} ${face.label} 晶向附近的图案`;
     $('face-description').textContent=`${face.vertices.length===3?'三角形':'正方形'}面 · 中心晶向 ${face.label}`;
     $('face-picker').value=String(index);
-    $('face-open').href=texturePath(face,textureKey());
-    $('face-open').hidden=false;
     schedule();
   }
   function frontFace() {
@@ -254,7 +252,7 @@
   async function loadCurrent() {
     const sequence=++loadSequence,key=textureKey();
     ready=false;canvas.setAttribute('aria-busy','true');$('loading').hidden=false;$('retry').hidden=true;
-    $('face-picker').disabled=true;$('face-preview').hidden=true;$('face-open').hidden=true;
+    $('face-picker').disabled=true;$('face-preview').hidden=true;
     $('loading-message').textContent=`正在载入 ${model} ${edition==='teaching'?'简明版':'原图版（首次约 '+(model==='FCC'?'24':'19')+' MB）'}…`;
     schedule();
     if (!loads.has(key)) {

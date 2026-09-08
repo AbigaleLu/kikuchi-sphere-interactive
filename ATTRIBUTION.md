@@ -30,9 +30,11 @@
 
 教学图纸和衍生贴图沿用 **CC BY-NC-SA 3.0**。它们不是所有低指数晶向的完整目录，也不是实时衍射模拟。
 
-## 特别感谢：Thermo Fisher Scientific NanoPort 团队
+## 特别感谢：资料支持与灵感启发
 
-感谢 Thermo Fisher Scientific NanoPort 工作人员慷慨提供最初的图纸，并在学习与交流中给予帮助。资料与交流支持是本项目的起点；图纸作者与权利归属仍按原作说明标注。
+特别感谢 Thermo Fisher Scientific NanoPort 团队慷慨提供最初的图纸，以及 Dr. Yang 在项目开展过程中给予的协助。
+
+本项目的构思亦受益于 Dr. Mou 与 Zhang（高级工程师）的启发，谨此致谢。灵感启发与资料支持不改变图纸的原作者及权利归属。
 
 ## 数字资源与再利用
 

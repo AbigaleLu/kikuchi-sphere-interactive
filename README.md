@@ -8,7 +8,7 @@
 
 1. 默认从 **低指数简明版 · FCC** 开始，选择 `[001]`、`[110]`、`[111]` 观察主要晶向。
 2. 拖动旋转，在同一视角切换 FCC / BCC 或图纸版本。
-3. 点击模型的一个面，查看并放大局部图案。
+3. 点击模型的一个面，在预览区查看局部图案。
 4. 需要更多标注时选择 **Austin P. Day 原图版**，并查阅作者的原始资料。
 5. 使用“复制当前视图链接”分享结构、图纸、角度、缩放及所选面。
 
@@ -66,6 +66,6 @@
 
 ## 来源与感谢
 
-原始图纸与布局：**Austin P. Day**。教学改编与数字模型的 AI 辅助：**Codex Astra（OpenAI Codex，AI 辅助工具）**。特别感谢 **Thermo Fisher Scientific NanoPort 团队**慷慨提供最初图纸，并给予交流与帮助。
+原始图纸与布局：**Austin P. Day**。教学改编与数字模型的 AI 辅助：**Codex Astra（OpenAI Codex，AI 辅助工具）**。特别感谢 **Thermo Fisher Scientific NanoPort 团队**提供最初图纸、**Dr. Yang**给予协助，以及 **Dr. Mou** 与 **Zhang（高级工程师）**带来的灵感启发。
 
 原作、改编范围、许可、无损资源转换及可引用的简短署名见 [ATTRIBUTION.md](ATTRIBUTION.md)。图纸与衍生贴图遵循 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)。

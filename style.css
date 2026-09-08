@@ -10,6 +10,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 294px;min-height:calc(100s
 
 /* Teaching product: the interactive model remains the primary content. */
 .teaching-app{--muted:#5e6c78;--border:#dde5e8;line-height:1.5}
+.teaching-app .credit-grid article p+p{margin-top:12px}
 .teaching-app .guide-section{padding-top:28px;padding-bottom:28px}.teaching-app .guide-section .reading-note{margin-top:0}
 .teaching-app [hidden]{display:none!important}
 .teaching-app a{color:var(--accent);text-underline-offset:3px}

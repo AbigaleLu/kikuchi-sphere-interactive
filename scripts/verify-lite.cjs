@@ -131,7 +131,7 @@ test('all 26 crystal directions are selectable, including the antipodal [00-1] f
  for(let i=0;i<h.probe.faces.length;i++){
   h.el('face-picker').handlers.change({target:{value:String(i)}});await h.ready();
   assert.equal(h.probe.frontFace(),i);assert.equal(h.probe.selected,i);
-  assert(h.probe.q.every(Number.isFinite));assert.equal(h.el('face-open').href,h.sandbox.window.KIKUCHI_LITE.sets.FCC_original.faces[i].detail);
+  assert(h.probe.q.every(Number.isFinite));assert.equal(h.el('face-label').textContent,h.probe.faces[i].label);
  }
  }finally{h.close();}
 });

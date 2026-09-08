@@ -121,7 +121,6 @@
     preview.setAttribute('aria-label',`${edition==='teaching'?'低指数简明版':'Austin P. Day 原图版'} ${model} ${face.label} 晶向附近的图案`);
     $('face-description').textContent=`${face.vertices.length===3?'三角形':'正方形'}面 · 中心晶向 ${face.label}`;
     $('face-picker').value=String(index);
-    $('face-open').href=pack.faces[index].detail;$('face-open').hidden=false;
     if (changed || force || !detail.image && !detail.request) loadDetail(index);
     drawPreview();
     schedule();
@@ -145,7 +144,7 @@
   async function loadModel() {
     const version=++loadVersion;
     clearTimeout(settleTimer);atlas.clear();detail.clear();ready=false;
-    pack=lite.sets[textureKey()];canvas.setAttribute('aria-busy','true');$('face-picker').disabled=true;$('face-open').hidden=true;
+    pack=lite.sets[textureKey()];canvas.setAttribute('aria-busy','true');$('face-picker').disabled=true;
     $('loading').hidden=false;$('retry-model').hidden=true;$('retry-detail').hidden=true;
     $('loading-message').textContent=`正在载入 ${model} 球体…`;
     $('detail-status').textContent='';drawPreview();schedule();
