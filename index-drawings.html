@@ -9,10 +9,11 @@
   <meta property="og:description" content="从低指数简明版开始，在同一视角对照 FCC / BCC 与 Austin P. Day 原图。免费在线教学工具。">
   <meta property="og:type" content="website">
   <title>菊池球 · FCC / BCC 交互教学模型</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260908-shared3">
   <script src="model-drawings.js" defer></script>
   <script src="model-lite.js" defer></script>
-  <script src="viewer-drawings.js" defer></script>
+  <script src="preview.js?v=1" defer></script>
+  <script src="viewer-drawings.js?v=20260908-shared3" defer></script>
 </head>
 <body class="teaching-app">
   <a class="skip-link" href="#controls">跳到模型控制</a>
@@ -49,7 +50,7 @@
       </section>
       <section class="control-block face-block">
         <div class="row"><h2>局部图案</h2><span id="face-label" class="face-label">—</span></div>
-        <div class="face-preview"><img id="face-preview" alt="所选晶向的图纸局部" hidden></div>
+        <div class="face-preview"><canvas id="face-preview" width="512" height="512" role="img" aria-label="所选晶向的图纸局部"></canvas></div>
         <label for="face-picker" hidden>选择晶向并转到对应面</label><select id="face-picker" disabled hidden><option>正在载入晶向…</option></select>
         <p class="detail" id="face-description">点选模型表面，查看对应的局部图案。</p>
       </section>

@@ -47,7 +47,7 @@ function harness(options={}){
   createImageBitmap:options.htmlFallback?undefined:async(blob)=>new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(track(image,blob.file));image.onerror=reject;image.src=fs.readFileSync(path.join(root,blob.file));})
  };
  vm.createContext(sandbox);
- for(const file of ['model-drawings.js','model-lite.js','texture-loader-lite.js','viewer-lite.js']){
+ for(const file of ['model-drawings.js','model-lite.js','texture-loader-lite.js','preview.js','viewer-lite.js']){
   let source=fs.readFileSync(path.join(root,file),'utf8');
   if(file==='viewer-lite.js')source=source.replace(/\}\)\(\);\s*$/,'window.probe={get q(){return q},get zoom(){return zoom},get key(){return textureKey()},get ready(){return ready},get selected(){return selected},get faces(){return data.faces},get pointers(){return pointers},rotate,frontFace,drawPreview};})();');
   vm.runInContext(source,sandbox);

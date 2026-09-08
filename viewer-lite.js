@@ -106,18 +106,10 @@
   function drawPreview() {
     previewCtx.clearRect(0,0,preview.width,preview.height);
     if (!ready || selected===null) return;
-    const [w,h]=pack.faces[selected].size;
-    // Text direction belongs to the source drawing; rotate only this reading view.
     const direction=edition==='day' ? data.faces[selected].textDirections[model] : [1,0];
-    const angle=-Math.atan2(direction[1],direction[0]);
-    const c=Math.abs(Math.cos(angle)),s=Math.abs(Math.sin(angle));
-    const scale=Math.min(preview.width/(w*c+h*s),preview.height/(w*s+h*c));
-    previewCtx.save();
-    previewCtx.translate(preview.width/2,preview.height/2);
-    previewCtx.rotate(angle);previewCtx.scale(scale,scale);
-    previewCtx.translate(-w/2,-h/2);
-    drawTexture(previewCtx,selected);previewCtx.restore();
+    window.drawKikuchiPreview(preview,pack.faces[selected].size,direction,ctx=>drawTexture(ctx,selected));
   }
+
   function selectFace(index,mark=false,force=false) {
     const changed=selected!==index;
     selected=index;highlight=mark;

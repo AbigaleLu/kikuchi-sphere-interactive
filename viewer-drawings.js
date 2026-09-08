@@ -107,9 +107,11 @@
     if (!ready) return;
     const face=data.faces[index];
     $('face-label').textContent=face.label;
-    $('face-preview').src=texturePath(face,textureKey());
+    const image=textures[textureKey()][index];
+    const direction=edition==='day' ? face.textDirections[model] : [1,0];
+    window.drawKikuchiPreview($('face-preview'),[image.width,image.height],direction,ctx=>ctx.drawImage(image,0,0));
     $('face-preview').hidden=false;
-    $('face-preview').alt=`${edition==='teaching'?'低指数简明版':'Austin P. Day 原图版'} ${model} ${face.label} 晶向附近的图案`;
+    $('face-preview').setAttribute('aria-label',`${edition==='teaching'?'低指数简明版':'Austin P. Day 原图版'} ${model} ${face.label} 晶向附近的图案`);
     $('face-description').textContent=`${face.vertices.length===3?'三角形':'正方形'}面 · 中心晶向 ${face.label}`;
     $('face-picker').value=String(index);
     schedule();
