@@ -4,8 +4,10 @@
   const $ = (id) => document.getElementById(id);
   const canvas = $('viewer'), ctx = canvas.getContext('2d');
   const data = window.KIKUCHI_MODEL;
-  if (!ctx || !data) {
-    $('loading').textContent = '模型资料未能载入。请保留整个项目文件夹，再打开 index-drawings.html。';
+  if (!ctx || !data || !window.KIKUCHI_LITE) {
+    $('loading-message').textContent = '模型资料未能载入，请刷新重试。也可下载下方的 A4 教学图纸。';
+    $('retry').hidden = false;
+    $('retry').addEventListener('click', () => location.reload());
     return;
   }
   const add = (a,b) => a.map((v,i) => v+b[i]);
@@ -24,12 +26,23 @@
     return add(v,add(mul(t,q[3]),cross(q,t)));
   }
   const home = () => compose(quat([1,0,0],0.38),quat([0,1,0],-0.60));
-  let q = home(), model = 'FCC', edition = 'new', zoom = 1, selected = null, highlight = false;
+  const params = new URLSearchParams(location.search);
+  let q = home(), model = params.get('crystal') === 'BCC' ? 'BCC' : 'FCC';
+  let edition = params.get('edition') === 'day' ? 'day' : 'teaching', zoom = 1, selected = null, highlight = false;
+  let restoredOrientation = false;
+  const sharedQ = (params.get('q') || '').split(',').map(Number);
+  if (sharedQ.length === 4 && sharedQ.every(Number.isFinite) && Math.hypot(...sharedQ) > 0.1) {
+    q = norm(sharedQ); restoredOrientation = true;
+  }
+  if (/^\d+(\.\d+)?$/.test(params.get('zoom') || '')) zoom = Math.max(0.55, Math.min(2.6, Number(params.get('zoom')) / 100));
   let width = 0, height = 0, scale = 1, visible = [], spinning = false;
   let frame = 0, lastTime = 0, ready = false;
   const radius = Math.max(...data.faces.flatMap(f => f.vertices.map(v => Math.hypot(...v))));
   const textures = Object.fromEntries(Object.keys(data.faces[0].images).map(key => [key,[]]));
-  const textureKey = () => edition === 'new' ? model : model+'_original';
+  const textureKey = () => edition === 'day' ? model : model+'_original';
+  const texturePath = (face, key) => window.KIKUCHI_LITE.sets[key].faces[face.id].detail;
+  const loads = new Map();
+  let loadSequence = 0;
   const pointers = new Map();
   let gestureStart = null, dragged = false, pinched = false;
 
@@ -90,13 +103,17 @@
     $('zoom-out').disabled=zoom<=0.55;$('zoom-in').disabled=zoom>=2.6;schedule();
   }
   function selectFace(index,mark=false) {
-    if (!ready) return;
     selected=index;highlight=mark;
+    if (!ready) return;
     const face=data.faces[index];
     $('face-label').textContent=face.label;
-    $('face-preview').src=face.images[textureKey()];
-    $('face-preview').alt=`${model} ${face.label} 面的原始图纸，保留原有线条、标签与色彩`;
-    $('face-description').textContent=`${face.vertices.length===3?'三角形':'正方形'}面 · ${face.label} 极居中`;
+    $('face-preview').src=texturePath(face,textureKey());
+    $('face-preview').hidden=false;
+    $('face-preview').alt=`${edition==='teaching'?'低指数教学版':'Austin P. Day 原图版'} ${model} ${face.label} 晶向附近的图案`;
+    $('face-description').textContent=`${face.vertices.length===3?'三角形':'正方形'}面 · 中心晶向 ${face.label}`;
+    $('face-picker').value=String(index);
+    $('face-open').href=texturePath(face,textureKey());
+    $('face-open').hidden=false;
     schedule();
   }
   function frontFace() {
@@ -108,15 +125,26 @@
     const name=model==='FCC'?'面心立方':'体心立方';
     $('model-tag').replaceChildren(document.createTextNode(model+' '));
     const span=document.createElement('span');span.textContent=name;$('model-tag').append(span);
-    $('model-description').textContent=edition==='original' ? `${name} · PDF 第 ${model==='FCC'?1:2} 页` : model==='FCC' ? 'FCCpage1 + FCCpage2 · 两页组成一个球' : 'bcc_all2 · 一张完整展开图';
-    $('legend-block').hidden=edition==='new';
-    $('source-note').textContent=edition==='original' ? '原版 PDF 贴图，保留原有中心线与色彩。' : model==='FCC' ? '图案取自两张 FCC 图纸，保留原有线条、标签与色彩。' : '图案取自 BCC 图纸。原图每面约 330 像素，放大后的细节受原图分辨率限制。';
-    $('source-credit').textContent=edition==='original' ? 'Austin P. Day · CC BY-NC-SA 3.0 · Modified centerline edition' : '新增图纸的来源文字见原图。';
+    document.querySelectorAll('[data-edition]').forEach(b => b.setAttribute('aria-pressed',String(b.dataset.edition===edition)));
+    $('edition-tag').textContent=edition==='teaching'?'低指数教学版':'Austin P. Day 原图版';
+    $('edition-description').textContent=edition==='teaching'
+      ? '保留低指数晶面族中心线及其交点标注，采用负指数上横杠。'
+      : '保留原图中更丰富的线条与高指数标注，用于进阶观察和对照。';
+    $('legend-block').hidden=edition==='day';
+    $('source-note').textContent=edition==='teaching' ? '低指数教学图纸 · FCC / BCC 各一页' : model==='FCC' ? 'Austin P. Day 的 FCC 展开图 · 两张组成一套' : 'Austin P. Day 的 BCC 展开图 · 一张组成一套';
+    $('print-note').textContent=edition==='teaching'
+      ? 'A4 横向，按 100% / 实际大小打印；校验 25 mm 标尺。每种结构剪成两片后拼合，边长均为 26.404 mm。'
+      : model==='BCC' ? '当前 BCC 原图分辨率较低，放大后清晰度受源图限制。制作实体模型时，请按原图尺寸单独校准。' : '原图保留作者的线条与标注。制作实体模型时，请按原图尺寸单独校准。';
     $('source-links').replaceChildren();
-    const sources=edition==='original' ? ['source/reference.pdf'] : model==='FCC' ? ['assets/FCCpage1.jpg','assets/FCCpage2.jpg'] : ['assets/bcc_all2.jpg'];
-    for (const path of sources) {
+    const sources=edition==='teaching' ? [['source/reference.pdf','下载 A4 教学图纸 · PDF']] : model==='FCC' ? [['assets/FCCpage1.jpg','查看 FCC 原图 · 第 1 张 ↗'],['assets/FCCpage2.jpg','查看 FCC 原图 · 第 2 张 ↗']] : [['assets/bcc_all2.jpg','查看 BCC 原图 ↗']];
+    for (const [path,label] of sources) {
       const link=document.createElement('a');link.href=path;link.target='_blank';link.rel='noopener';
-      link.textContent='查看 '+path.split('/').pop()+' ↗';$('source-links').append(link);
+      link.textContent=label;
+      if (edition==='teaching') {link.className='download-link';link.download='Kikuchi_FCC_BCC_LowIndex_A4.pdf';}
+      $('source-links').append(link);
+    }
+    if (edition==='day') {
+      const link=document.createElement('a');link.href='https://www.thingiverse.com/thing:969758';link.target='_blank';link.rel='noopener';link.textContent='访问 Austin P. Day 的作品页面 ↗';$('source-links').append(link);
     }
     $('legend').replaceChildren();
     for (const line of data.legends[model]) {
@@ -126,28 +154,29 @@
       Object.entries({x1:0,y1:3,x2:20,y2:3,stroke:line.color,'stroke-width':1.6,'stroke-dasharray':line.dash || ''}).forEach(([k,v]) => stroke.setAttribute(k,v));
       svg.append(stroke);item.append(svg,document.createTextNode(line.label));$('legend').append(item);
     }
-    if (ready) selectFace(selected===null?frontFace():selected,highlight);
-    schedule();
+    loadCurrent();
   }
   function setSpin(value) {
     spinning=value;lastTime=0;
+    if (value) clearPreset();
     $('spin').setAttribute('aria-pressed',String(value));$('spin').textContent=value?'停止旋转':'自动旋转';schedule();
   }
   function setView(direction) {
     const from=norm(direction),to=[0,0,1],axis=cross(from,to),angle=Math.acos(Math.max(-1,Math.min(1,dot(from,to))));
-    q=angle<0.00001?[0,0,0,1]:quat(norm(axis),angle);
+    q=angle<0.00001?[0,0,0,1]:Math.PI-angle<0.00001?quat([1,0,0],Math.PI):quat(norm(axis),angle);
     uprightFront();setSpin(false);selectFace(frontFace());schedule();
+    document.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed',String(b.dataset.view===direction.join(''))));
   }
   function uprightFront() {
     const face=data.faces[frontFace()];
-    const direction=edition==='new' ? face.textDirections[model] : [1,0];
+    const direction=edition==='day' ? face.textDirections[model] : [1,0];
     const right=rotate(add(mul(face.u,direction[0]),mul(face.v,direction[1])));
     q=compose(quat([0,0,1],-Math.atan2(right[1],right[0])),q);
   }
-  function reset() { q=home();uprightFront();setSpin(false);setZoom(1);selectFace(frontFace()); }
+  function clearPreset() {document.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed','false'));}
+  function reset() { q=home();uprightFront();setSpin(false);setZoom(1);selectFace(frontFace());clearPreset(); }
   document.querySelectorAll('[data-edition]').forEach(b => b.addEventListener('click',() => {
     edition=b.dataset.edition;
-    document.querySelectorAll('[data-edition]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.edition===edition)));
     setModel(model);
   }));
   document.querySelectorAll('[data-model]').forEach(b => b.addEventListener('click',() => setModel(b.dataset.model)));
@@ -156,6 +185,26 @@
   $('zoom-out').addEventListener('click',() => setZoom(zoom-0.15));
   $('zoom-in').addEventListener('click',() => setZoom(zoom+0.15));
   $('spin').addEventListener('click',() => setSpin(!spinning));$('reset').addEventListener('click',reset);
+  $('face-picker').replaceChildren(...data.faces.map((face,i) => {
+    const option=document.createElement('option');option.value=String(i);option.textContent=face.label+' 晶向';return option;
+  }));
+  $('face-picker').addEventListener('change',e => setView(data.faces[Number(e.target.value)].hkl));
+  $('retry').addEventListener('click',() => loadCurrent());
+  function currentViewUrl(page) {
+    const url=new URL(location.protocol==='file:'?'https://abigalelu.github.io/kikuchi-sphere-teaching/index-drawings.html':location.href);url.hash='';url.search='';
+    if(page) url.pathname=url.pathname.replace(/[^/]*$/,page);
+    url.searchParams.set('edition',edition);url.searchParams.set('crystal',model);
+    url.searchParams.set('q',q.map(v=>v.toFixed(6)).join(','));url.searchParams.set('zoom',String(Math.round(zoom*100)));
+    if (selected!==null) url.searchParams.set('face',String(selected));
+    return url;
+  }
+  $('render-mode-link').addEventListener('click',() => {setSpin(false);$('render-mode-link').href=currentViewUrl('index-lite.html').href;});
+  $('share').addEventListener('click',async () => {
+    setSpin(false);
+    const url=currentViewUrl();
+    try {await navigator.clipboard.writeText(url.href);$('share-status').textContent='已复制，可直接分享当前视角';$('share-fallback').hidden=true;}
+    catch {const input=$('share-fallback');input.hidden=false;input.value=url.href;input.focus();input.select();$('share-status').textContent='请复制下面的链接';}
+  });
 
   function local(e) { const r=canvas.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]; }
   function separation() { const p=[...pointers.values()];return Math.hypot(...sub(p[0],p[1])); }
@@ -165,7 +214,7 @@
     pointers.set(e.pointerId,local(e));
     if (pointers.size===1) {gestureStart=local(e);dragged=false;pinched=false;}
     else {pinched=true;dragged=true;}
-    setSpin(false);
+    setSpin(false);clearPreset();
   });
   canvas.addEventListener('pointermove',e => {
     if (!pointers.has(e.pointerId)) return;
@@ -196,15 +245,39 @@
   canvas.addEventListener('wheel',e => {e.preventDefault();const unit=e.deltaMode===1?16:e.deltaMode===2?height:1;setZoom(zoom*Math.exp(-e.deltaY*unit*0.001));},{passive:false});
   canvas.addEventListener('keydown',e => {
     const keys={ArrowLeft:[[0,1,0],-0.1],ArrowRight:[[0,1,0],0.1],ArrowUp:[[1,0,0],-0.1],ArrowDown:[[1,0,0],0.1]};
-    if (keys[e.key]) {e.preventDefault();setSpin(false);q=compose(quat(...keys[e.key]),q);schedule();}
+    if (keys[e.key]) {e.preventDefault();setSpin(false);clearPreset();q=compose(quat(...keys[e.key]),q);schedule();}
     else if (['+','=','-','_','Home'].includes(e.key)) {e.preventDefault();e.key==='Home'?reset():setZoom(zoom+(['-','_'].includes(e.key)?-0.1:0.1));}
   });
   document.addEventListener('visibilitychange',() => {lastTime=0;if (!document.hidden) schedule();});
   new ResizeObserver(resize).observe(canvas);window.addEventListener('resize',resize);
-  setModel('FCC');resize();
-  Promise.all(Object.keys(textures).flatMap(type => data.faces.map((face,i) => new Promise((resolve,reject) => {
-    const img=new Image();img.onload=resolve;img.onerror=() => reject(new Error(face.images[type]));
-    textures[type][i]=img;img.src=face.images[type];
-  })))).then(() => {ready=true;$('loading').hidden=true;uprightFront();selectFace(frontFace());schedule();})
-    .catch(() => {$('loading').textContent='部分图案未能载入。请确认 assets 文件夹完整，再重新打开网页。';});
+  async function loadCurrent() {
+    const sequence=++loadSequence,key=textureKey();
+    ready=false;canvas.setAttribute('aria-busy','true');$('loading').hidden=false;$('retry').hidden=true;
+    $('face-picker').disabled=true;$('face-preview').hidden=true;$('face-open').hidden=true;
+    $('loading-message').textContent=`正在载入 ${model} ${edition==='teaching'?'教学版':'原图版（首次约 '+(model==='FCC'?'24':'19')+' MB）'}…`;
+    schedule();
+    if (!loads.has(key)) {
+      let completed=0;
+      const pending=Promise.all(data.faces.map((face,i) => new Promise((resolve,reject) => {
+        const img=new Image();
+        const timer=setTimeout(()=>{img.onload=null;img.onerror=null;reject(new Error('Image timeout'));},60000);
+        img.onload=()=>{clearTimeout(timer);completed++;if(sequence===loadSequence)$('loading-message').textContent=`正在载入 ${model} · ${completed} / 26${edition==='day'?' · 原图较大，请稍候':''}`;resolve(img);};
+        img.onerror=()=>{clearTimeout(timer);reject(new Error('Image unavailable'));};
+        img.src=texturePath(face,key);
+      }))).then(images=>{textures[key]=images;return images;}).catch(error=>{loads.delete(key);throw error;});
+      loads.set(key,pending);
+    }
+    try {
+      await loads.get(key);
+      if(sequence!==loadSequence)return;
+      ready=true;canvas.setAttribute('aria-busy','false');$('loading').hidden=true;$('face-picker').disabled=false;
+      selectFace(selected===null?frontFace():selected,highlight);schedule();
+    } catch {
+      if(sequence!==loadSequence)return;
+      canvas.setAttribute('aria-busy','false');$('loading-message').textContent='这套图案暂未载入。请重试，或切换另一套图纸；下方仍可下载纸质图纸。';$('retry').hidden=false;
+    }
+  }
+  if (!restoredOrientation) uprightFront();
+  if (/^\d+$/.test(params.get('face') || '') && Number(params.get('face'))<data.faces.length) selected=Number(params.get('face'));
+  setZoom(zoom);setModel(model);resize();
 })();
