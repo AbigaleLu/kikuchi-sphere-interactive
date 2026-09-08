@@ -18,7 +18,7 @@
 
 | 版本 | 用途 | 来源 |
 | --- | --- | --- |
-| 低指数教学版（默认） | 精简中心线与标注，入门和课堂演示 | Abigale Lu 与 Codex Astra 辅助改编，基于 Austin P. Day 的图纸和展开布局参考 |
+| 低指数教学版（默认） | 精简中心线与标注，入门和课堂演示 | 基于 Austin P. Day 的图纸和展开布局参考，Codex Astra 提供 AI 辅助 |
 | Austin P. Day 原图版 | 查看所提供图纸中更多高指数标注 | Austin P. Day 的 FCC / BCC 图纸；最初资料由 NanoPort 工作人员提供 |
 
 低指数版从各分量绝对值不超过 3 的候选晶面中按反射条件筛选，合并共线高次反射，仅标注保留中心线形成的部分晶带轴交点。它不保证列出所有低指数方向。
@@ -66,6 +66,6 @@
 
 ## 来源与感谢
 
-原始图纸与布局：**Austin P. Day**。教学改编与数字模型：**Abigale Lu × Codex Astra（OpenAI Codex，AI 辅助工具）**。特别感谢 **Thermo Fisher Scientific NanoPort 团队**慷慨提供最初图纸，并给予交流与帮助。
+原始图纸与布局：**Austin P. Day**。教学改编与数字模型的 AI 辅助：**Codex Astra（OpenAI Codex，AI 辅助工具）**。特别感谢 **Thermo Fisher Scientific NanoPort 团队**慷慨提供最初图纸，并给予交流与帮助。
 
 原作、改编范围、许可、无损资源转换及可引用的简短署名见 [ATTRIBUTION.md](ATTRIBUTION.md)。图纸与衍生贴图遵循 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)。
