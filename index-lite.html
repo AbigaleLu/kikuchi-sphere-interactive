@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="旋转观察 FCC / BCC 菊池球，从低指数教学版理解晶带轴与晶面族，再用 Austin P. Day 原图版探索更多高指数标注。支持单面查看、视图分享与 A4 图纸下载。">
+  <meta name="description" content="旋转观察 FCC / BCC 菊池球，从低指数简明版理解晶带轴与晶面族，再用 Austin P. Day 原图版探索更多高指数标注。支持单面查看、视图分享与 A4 图纸下载。">
   <meta name="theme-color" content="#176d78">
   <meta property="og:title" content="菊池球 · FCC / BCC 交互模型">
-  <meta property="og:description" content="从低指数教学版开始，在同一视角对照 FCC / BCC 与 Austin P. Day 原图。免费在线教学工具。">
+  <meta property="og:description" content="从低指数简明版开始，在同一视角对照 FCC / BCC 与 Austin P. Day 原图。免费在线教学工具。">
   <meta property="og:type" content="website">
   <title>菊池球 · FCC / BCC 轻量教学模型</title>
   <link rel="stylesheet" href="style.css">
@@ -24,9 +24,9 @@
   </header>
   <main>
     <section class="stage" aria-label="菊池球三维观察区">
-      <div class="stage-top"><div><span class="model-tag" id="model-tag">FCC <span>面心立方</span></span></div><span class="edition-tag" id="edition-tag">低指数教学版</span></div>
+      <div class="stage-top"><div><span class="model-tag" id="model-tag">FCC <span>面心立方</span></span></div><span class="edition-tag" id="edition-tag">低指数简明版</span></div>
       <canvas id="viewer" tabindex="0" aria-label="菊池球模型。拖动或按方向键旋转，滚轮或加减键缩放，点击表面查看图案，Home 键复位。也可在模型控制中选择晶向。" aria-busy="true"></canvas>
-      <div id="loading" class="loading" role="status"><span id="loading-message">正在载入低指数教学版…</span><button id="retry-model" type="button" hidden>重新载入</button></div>
+      <div id="loading" class="loading" role="status"><span id="loading-message">正在载入低指数简明版…</span><button id="retry-model" type="button" hidden>重新载入</button></div>
       <noscript><p class="loading">请启用 JavaScript 查看交互模型。也可在下方下载 A4 教学图纸。</p></noscript>
       <div class="stage-bottom"><span>拖动旋转 <i>·</i> 双指 / 滚轮缩放 <i>·</i> 点选单面</span><button id="reset" class="reset" type="button" title="快捷键 Home">↺ <span>复位视图</span></button></div>
     </section>
@@ -34,7 +34,7 @@
       <section class="control-block edition-block">
         <div class="row"><h2>选择图纸</h2></div>
         <div class="edition-options" role="group" aria-label="选择图纸版本">
-          <button type="button" data-edition="teaching" aria-pressed="true"><span class="edition-title">低指数教学版 <small>推荐入门</small></span><span class="edition-subtitle">线条精简，先看清主要晶向关系</span></button>
+          <button type="button" data-edition="teaching" aria-pressed="true"><span class="edition-title">低指数简明版 <small>推荐入门</small></span><span class="edition-subtitle">线条精简，先看清主要晶向关系</span></button>
           <button type="button" data-edition="day" aria-pressed="false"><span class="edition-title">Austin P. Day 原图版</span><span class="edition-subtitle">更多高指数标注，适合进阶对照</span></button>
         </div>
         <p class="detail" id="edition-description" hidden></p>
@@ -58,7 +58,7 @@
         <p class="detail" id="detail-status" role="status"></p><button id="retry-detail" class="text-button" type="button" hidden>重试高清图</button>
         <a id="face-open" class="inline-link" href="assets/fcc-17.png" target="_blank" rel="noopener" hidden>放大查看此面 ↗</a>
       </section>
-      <details id="legend-block" class="legend-block"><summary>教学版线条图例 <span>晶面族</span></summary><div id="legend" class="legend"></div><p class="detail">不同晶面族以颜色和线型区分。<br>晶向以 [uvw] 标注；数字上方的横杠表示该指数为负。</p></details>
+      <details id="legend-block" class="legend-block"><summary>简明版线条图例 <span>晶面族</span></summary><div id="legend" class="legend"></div><p class="detail">不同晶面族以颜色和线型区分。<br>晶向以 [uvw] 标注；数字上方的横杠表示该指数为负。</p></details>
       <section class="control-block download-block" aria-label="图纸与下载">
         <h2>图纸与打印</h2><p class="detail" id="source-note" hidden></p><div id="source-links"><a class="download-link" href="source/reference.pdf" download="Kikuchi_FCC_BCC_LowIndex_A4.pdf">下载 A4 教学图纸 · PDF</a></div><p class="detail" id="print-note" hidden></p>
       </section>
@@ -68,7 +68,7 @@
     </aside>
   </main>
   <section id="guide" class="guide-section" aria-label="图纸说明">
-    <details class="reading-note"><summary>这两种图纸有什么区别？</summary><div><p><strong>低指数教学版（Strict）</strong>：从各分量绝对值不超过 3 的候选晶面中按 FCC / BCC 反射条件筛选，将共线的高次反射合并为中心线，并仅标注保留线条形成的部分晶带轴交点。它用于减少视觉负担，不是所有低指数晶向的完整目录。</p><p><strong>Austin P. Day 原图版</strong>：保留所提供图纸中更丰富的线条、色彩与高指数标注。当前 BCC 原图分辨率较低，放大后清晰度受源图限制；可访问作者的作品页面查阅原始资料。</p><p>模型由 18 个正方形面与 8 个三角形面组成，展示预先绘制的图案，不实时计算衍射花样、晶格常数或菊池带强度。</p></div></details>
+    <details class="reading-note"><summary>这两种图纸有什么区别？</summary><div><p><strong>低指数简明版（Strict）</strong>：从各分量绝对值不超过 3 的候选晶面中按 FCC / BCC 反射条件筛选，将共线的高次反射合并为中心线，并仅标注保留线条形成的部分晶带轴交点。它用于减少视觉负担，不是所有低指数晶向的完整目录。</p><p><strong>Austin P. Day 原图版</strong>：保留所提供图纸中更丰富的线条、色彩与高指数标注。当前 BCC 原图分辨率较低，放大后清晰度受源图限制；可访问作者的作品页面查阅原始资料。</p><p>模型由 18 个正方形面与 8 个三角形面组成，展示预先绘制的图案，不实时计算衍射花样、晶格常数或菊池带强度。</p></div></details>
   </section>
   <footer id="credits" class="credits-section" aria-labelledby="credits-title">
     <div class="section-intro"><p class="eyebrow">站在分享者的肩膀上</p><h2 id="credits-title">来源、改编与感谢</h2></div>

@@ -109,7 +109,7 @@
     $('face-label').textContent=face.label;
     $('face-preview').src=texturePath(face,textureKey());
     $('face-preview').hidden=false;
-    $('face-preview').alt=`${edition==='teaching'?'低指数教学版':'Austin P. Day 原图版'} ${model} ${face.label} 晶向附近的图案`;
+    $('face-preview').alt=`${edition==='teaching'?'低指数简明版':'Austin P. Day 原图版'} ${model} ${face.label} 晶向附近的图案`;
     $('face-description').textContent=`${face.vertices.length===3?'三角形':'正方形'}面 · 中心晶向 ${face.label}`;
     $('face-picker').value=String(index);
     $('face-open').href=texturePath(face,textureKey());
@@ -126,7 +126,7 @@
     $('model-tag').replaceChildren(document.createTextNode(model+' '));
     const span=document.createElement('span');span.textContent=name;$('model-tag').append(span);
     document.querySelectorAll('[data-edition]').forEach(b => b.setAttribute('aria-pressed',String(b.dataset.edition===edition)));
-    $('edition-tag').textContent=edition==='teaching'?'低指数教学版':'Austin P. Day 原图版';
+    $('edition-tag').textContent=edition==='teaching'?'低指数简明版':'Austin P. Day 原图版';
     $('edition-description').hidden=edition==='teaching';
     $('edition-description').textContent=edition==='teaching' ? '' : '保留原图中更丰富的线条与高指数标注，用于进阶观察和对照。';
     $('legend-block').hidden=edition==='day';
@@ -255,7 +255,7 @@
     const sequence=++loadSequence,key=textureKey();
     ready=false;canvas.setAttribute('aria-busy','true');$('loading').hidden=false;$('retry').hidden=true;
     $('face-picker').disabled=true;$('face-preview').hidden=true;$('face-open').hidden=true;
-    $('loading-message').textContent=`正在载入 ${model} ${edition==='teaching'?'教学版':'原图版（首次约 '+(model==='FCC'?'24':'19')+' MB）'}…`;
+    $('loading-message').textContent=`正在载入 ${model} ${edition==='teaching'?'简明版':'原图版（首次约 '+(model==='FCC'?'24':'19')+' MB）'}…`;
     schedule();
     if (!loads.has(key)) {
       let completed=0;

@@ -16,9 +16,9 @@
 
 “原图版”表示沿用所提供原图的内容，不表示覆盖全部可能的晶面或晶带轴。当前 BCC 原图分辨率限制了放大后的清晰度。
 
-## 低指数教学版：Codex Astra 提供 AI 辅助
+## 低指数简明版：Codex Astra 提供 AI 辅助
 
-网页默认展示 **低指数教学版（Strict）**。这是一份基于 Austin P. Day 图纸和多面体展开布局参考的教学改编，不是 Austin P. Day 的原始 PDF。
+网页默认展示 **低指数简明版（Strict）**。这是一份基于 Austin P. Day 图纸和多面体展开布局参考的教学改编，不是 Austin P. Day 的原始 PDF。
 
 `source/reference.pdf` 是 2026-09-04 完成的 FCC / BCC 两片式 A4 教学图纸：两种结构边长均为 26.404421 mm；FCC 为第 1 页，BCC 为第 2 页；字号统一，负指数使用上横杠。文件名为兼容既有链接而保留。
 
@@ -36,7 +36,7 @@
 
 ## 数字资源与再利用
 
-`assets/lite/original-fcc/`、`assets/lite/original-bcc/` 对应低指数教学版；`assets/lite/new-fcc/`、`assets/lite/new-bcc/` 对应 Austin P. Day 原图版。内部目录名保留以兼容既有资源链接，并不表示图纸作者或发布时间。
+`assets/lite/original-fcc/`、`assets/lite/original-bcc/` 对应低指数简明版；`assets/lite/new-fcc/`、`assets/lite/new-bcc/` 对应 Austin P. Day 原图版。内部目录名保留以兼容既有资源链接，并不表示图纸作者或发布时间。
 
 轻量版旋转预览使用缩小图集，停止或选面后按需载入一个原分辨率、无损 WebP 高清面；全清晰视图使用同一批无损高清面。原始 PNG、JPG 与 PDF 均保留。资源由 `scripts/build-lite.cjs` 生成，格式转换不改变作者或许可。
 
