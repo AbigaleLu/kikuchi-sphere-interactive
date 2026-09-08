@@ -66,6 +66,6 @@
 
 ## 来源与感谢
 
-原始图纸与布局：**Austin P. Day**。教学改编与数字模型的 AI 辅助：**Codex Astra（OpenAI Codex，AI 辅助工具）**。特别感谢 **Thermo Fisher Scientific NanoPort 团队**提供最初图纸、**Dr. Yang**给予协助，以及 **Dr. Mou** 与 **Zhang（高级工程师）**带来的灵感启发。
+原始图纸与布局：**Austin P. Day**。本项目的构思与完善受益于 **Zhang 和 Mou**，感谢他们在思路、细节与实践层面给予的启发和建议。特别感谢 **Thermo Fisher Scientific NanoPort 团队**提供最初图纸，以及 **Dr. Yang**给予协助。教学改编与数字模型的 AI 辅助：**Codex Astra（OpenAI Codex，AI 辅助工具）**。
 
 原作、改编范围、许可、无损资源转换及可引用的简短署名见 [ATTRIBUTION.md](ATTRIBUTION.md)。图纸与衍生贴图遵循 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)。
