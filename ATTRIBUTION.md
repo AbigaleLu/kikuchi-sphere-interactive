@@ -16,7 +16,7 @@
 
 “原图版”表示沿用所提供原图的内容，不表示覆盖全部可能的晶面或晶带轴。当前 BCC 原图分辨率限制了放大后的清晰度。
 
-## 低指数教学版：Abigale Lu 与 Codex Astra 辅助改编
+## 低指数教学版：Codex Astra 提供 AI 辅助
 
 网页默认展示 **低指数教学版（Strict）**。这是一份基于 Austin P. Day 图纸和多面体展开布局参考的教学改编，不是 Austin P. Day 的原始 PDF。
 
@@ -24,7 +24,6 @@
 
 - SHA-256：`87057e4815f465ccb34594c8eeb3d0fa7445db52257c46e0bbd492df73991a9a`
 - `assets/fcc-*.png`、`assets/bcc-*.png` 是该教学 PDF 的面贴图。
-- Abigale Lu 提出教学需求，进行实体试用，整理资料并发布项目。
 - Codex Astra（OpenAI Codex，AI 辅助工具）协助中心线重绘、标签与打印排版、多面体建模和网页实现。该署名说明 AI 辅助工作的来源，不把 AI 描述为原始图纸作者或独立权利人。
 
 主要改编包括：筛选低指数晶面族、将共线高次反射合并为中心线、选择保留中心线交点的晶向标注、重新生成负指数上横杠标签、调整字号、加入无编号胶舌，以及统一 FCC / BCC 的 A4 排版与实体边长。网页进一步进行了几何登记、面贴图映射、交互旋转、单面预览和视图分享。
@@ -47,6 +46,6 @@
 
 可用于课件中的简短署名：
 
-> 原始图纸与展开布局：Austin P. Day，Polyhedral cubic Kikuchi maps；低指数教学改编与数字模型：Abigale Lu，Codex Astra（OpenAI Codex）辅助。感谢 Thermo Fisher Scientific NanoPort 团队提供最初资料与交流帮助。图纸及衍生贴图：CC BY-NC-SA 3.0。
+> 原始图纸与展开布局：Austin P. Day，Polyhedral cubic Kikuchi maps；低指数教学改编与数字模型的 AI 辅助：Codex Astra（OpenAI Codex）。感谢 Thermo Fisher Scientific NanoPort 团队提供最初资料与交流帮助。图纸及衍生贴图：CC BY-NC-SA 3.0。
 
 在线使用时，请将原作者作品与 CC 许可链接一并保留。
