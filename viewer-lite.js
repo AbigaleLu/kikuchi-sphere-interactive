@@ -177,9 +177,11 @@
     $('edition-description').hidden=edition==='teaching';
     $('edition-description').textContent=edition==='teaching' ? '' : '保留原图中更丰富的线条与高指数标注，用于进阶观察和对照。';
     $('legend-block').hidden=edition==='day';
-    $('source-note').textContent=edition==='teaching' ? '低指数教学图纸 · FCC / BCC 各一页' : model==='FCC' ? 'Austin P. Day 的 FCC 展开图 · 两张组成一套' : 'Austin P. Day 的 BCC 展开图 · 一张组成一套';
+    $('source-note').hidden=edition==='teaching';
+    $('source-note').textContent=edition==='teaching' ? '' : model==='FCC' ? 'Austin P. Day 的 FCC 展开图 · 两张组成一套' : 'Austin P. Day 的 BCC 展开图 · 一张组成一套';
+    $('print-note').hidden=edition==='teaching';
     $('print-note').textContent=edition==='teaching'
-      ? 'A4 横向，按 100% / 实际大小打印；校验 25 mm 标尺。每种结构剪成两片后拼合，边长均为 26.404 mm。'
+      ? ''
       : model==='BCC' ? '当前 BCC 原图分辨率较低，放大后清晰度受源图限制。制作实体模型时，请按原图尺寸单独校准。' : '原图保留作者的线条与标注。制作实体模型时，请按原图尺寸单独校准。';
     $('source-links').replaceChildren();
     const sources=edition==='teaching' ? [['source/reference.pdf','下载 A4 教学图纸 · PDF']] : model==='FCC' ? [['assets/FCCpage1.jpg','查看 FCC 原图 · 第 1 张 ↗'],['assets/FCCpage2.jpg','查看 FCC 原图 · 第 2 张 ↗']] : [['assets/bcc_all2.jpg','查看 BCC 原图 ↗']];

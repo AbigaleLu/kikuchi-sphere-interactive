@@ -10,6 +10,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 294px;min-height:calc(100s
 
 /* Teaching product: the interactive model remains the primary content. */
 .teaching-app{--muted:#5e6c78;--border:#dde5e8;line-height:1.5}
+.teaching-app .guide-section{padding-top:28px;padding-bottom:28px}.teaching-app .guide-section .reading-note{margin-top:0}
 .teaching-app [hidden]{display:none!important}
 .teaching-app a{color:var(--accent);text-underline-offset:3px}
 .render-note{margin:0;font-size:11px;line-height:1.8;color:var(--muted)}.render-note a{display:inline-block;margin-top:4px}.teaching-app .render-note{grid-column:1/-1}
