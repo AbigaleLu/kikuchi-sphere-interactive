@@ -174,9 +174,8 @@
     const span=document.createElement('span');span.textContent=name;$('model-tag').append(span);
     document.querySelectorAll('[data-edition]').forEach(b => b.setAttribute('aria-pressed',String(b.dataset.edition===edition)));
     $('edition-tag').textContent=edition==='teaching'?'低指数教学版':'Austin P. Day 原图版';
-    $('edition-description').textContent=edition==='teaching'
-      ? '保留低指数晶面族中心线及其交点标注，采用负指数上横杠。'
-      : '保留原图中更丰富的线条与高指数标注，用于进阶观察和对照。';
+    $('edition-description').hidden=edition==='teaching';
+    $('edition-description').textContent=edition==='teaching' ? '' : '保留原图中更丰富的线条与高指数标注，用于进阶观察和对照。';
     $('legend-block').hidden=edition==='day';
     $('source-note').textContent=edition==='teaching' ? '低指数教学图纸 · FCC / BCC 各一页' : model==='FCC' ? 'Austin P. Day 的 FCC 展开图 · 两张组成一套' : 'Austin P. Day 的 BCC 展开图 · 一张组成一套';
     $('print-note').textContent=edition==='teaching'
