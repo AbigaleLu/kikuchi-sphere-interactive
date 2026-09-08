@@ -125,26 +125,8 @@
     const span=document.createElement('span');span.textContent=name;$('model-tag').append(span);
     document.querySelectorAll('[data-edition]').forEach(b => b.setAttribute('aria-pressed',String(b.dataset.edition===edition)));
     $('edition-tag').textContent=edition==='teaching'?'低指数简明版':'Austin P. Day 原图版';
-    $('edition-description').hidden=edition==='teaching';
-    $('edition-description').textContent=edition==='teaching' ? '' : '保留原图中更丰富的线条与高指数标注，用于进阶观察和对照。';
     $('legend-block').hidden=edition==='day';
-    $('source-note').hidden=edition==='teaching';
-    $('source-note').textContent=edition==='teaching' ? '' : model==='FCC' ? 'Austin P. Day 的 FCC 展开图 · 两张组成一套' : 'Austin P. Day 的 BCC 展开图 · 一张组成一套';
-    $('print-note').hidden=edition==='teaching';
-    $('print-note').textContent=edition==='teaching'
-      ? ''
-      : model==='BCC' ? '当前 BCC 原图分辨率较低，放大后清晰度受源图限制。制作实体模型时，请按原图尺寸单独校准。' : '原图保留作者的线条与标注。制作实体模型时，请按原图尺寸单独校准。';
-    $('source-links').replaceChildren();
-    const sources=edition==='teaching' ? [['source/reference.pdf','下载 A4 教学图纸 · PDF']] : model==='FCC' ? [['assets/FCCpage1.jpg','查看 FCC 原图 · 第 1 张 ↗'],['assets/FCCpage2.jpg','查看 FCC 原图 · 第 2 张 ↗']] : [['assets/bcc_all2.jpg','查看 BCC 原图 ↗']];
-    for (const [path,label] of sources) {
-      const link=document.createElement('a');link.href=path;link.target='_blank';link.rel='noopener';
-      link.textContent=label;
-      if (edition==='teaching') {link.className='download-link';link.download='Kikuchi_FCC_BCC_LowIndex_A4.pdf';}
-      $('source-links').append(link);
-    }
-    if (edition==='day') {
-      const link=document.createElement('a');link.href='https://www.thingiverse.com/thing:969758';link.target='_blank';link.rel='noopener';link.textContent='访问 Austin P. Day 的作品页面 ↗';$('source-links').append(link);
-    }
+    $('download-block').hidden=edition==='day';
     $('legend').replaceChildren();
     for (const line of data.legends[model]) {
       const item=document.createElement('span');item.className='legend-item';

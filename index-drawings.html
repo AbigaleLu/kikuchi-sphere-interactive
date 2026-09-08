@@ -35,12 +35,11 @@
           <button type="button" data-edition="teaching" aria-pressed="true"><span class="edition-title">低指数简明版 <small>推荐入门</small></span><span class="edition-subtitle">线条精简，先看清主要晶向关系</span></button>
           <button type="button" data-edition="day" aria-pressed="false"><span class="edition-title">Austin P. Day 原图版</span><span class="edition-subtitle">更多高指数标注，适合进阶对照</span></button>
         </div>
-        <p class="detail" id="edition-description" hidden></p>
+        <details id="guide" class="reading-note"><summary>这两种图纸有什么区别？</summary><div><p><strong>低指数简明版（Strict）</strong>：从各分量绝对值不超过 3 的候选晶面中按 FCC / BCC 反射条件筛选，将共线的高次反射合并为中心线，并仅标注保留线条形成的部分晶带轴交点。它用于减少视觉负担，不是所有低指数晶向的完整目录。</p><p><strong>Austin P. Day 原图版</strong>：保留所提供图纸中更丰富的线条、色彩与高指数标注。当前 BCC 原图分辨率较低，放大后清晰度受源图限制；可访问作者的作品页面查阅原始资料。</p><p>模型由 18 个正方形面与 8 个三角形面组成，展示预先绘制的图案，不实时计算衍射花样、晶格常数或菊池带强度。</p></div></details>
       </section>
       <section class="control-block crystal-block">
         <h2>晶体结构</h2>
         <div class="segmented" role="group" aria-label="选择晶体类型"><button type="button" data-model="FCC" aria-pressed="true">FCC <span>面心立方</span></button><button type="button" data-model="BCC" aria-pressed="false">BCC <span>体心立方</span></button></div>
-        <p class="detail">切换结构或图纸时保留当前视角与缩放。</p>
       </section>
       <section class="control-block view-block">
         <div class="row"><h2>沿晶向观察</h2><button type="button" id="spin" class="text-button" aria-pressed="false">自动旋转</button></div>
@@ -55,22 +54,19 @@
         <p class="detail" id="face-description">点选模型表面，查看对应的局部图案。</p>
       </section>
       <details id="legend-block" class="legend-block"><summary>简明版线条图例 <span>晶面族</span></summary><div id="legend" class="legend"></div><p class="detail">不同晶面族以颜色和线型区分。<br>晶向以 [uvw] 标注；数字上方的横杠表示该指数为负。</p></details>
-      <section class="control-block download-block" aria-label="图纸与下载">
-        <h2>图纸与打印</h2><p class="detail" id="source-note" hidden></p><div id="source-links"><a class="download-link" href="source/reference.pdf" download="Kikuchi_FCC_BCC_LowIndex_A4.pdf">下载 A4 教学图纸 · PDF</a></div><p class="detail" id="print-note" hidden></p>
+      <section id="download-block" class="control-block download-block" aria-label="图纸与下载">
+        <h2>图纸下载</h2><div id="source-links"><a class="download-link" href="source/reference.pdf" download="Kikuchi_FCC_BCC_LowIndex_A4.pdf">下载 A4 教学图纸 · PDF</a></div>
       </section>
       <div class="share-block"><button id="share" type="button">复制当前视图链接</button><span id="share-status" role="status"></span><input id="share-fallback" aria-label="当前视图链接，可手动复制" readonly hidden></div>
       <p class="render-note">当前为全清晰视图，所有面保留原分辨率。<a href="index-lite.html" id="render-mode-link">切换轻量视图 ↗</a></p>
       <p class="panel-credit">原始图纸与布局：<a href="#credits">Austin P. Day</a><br>教学改编与数字模型 · AI 辅助：Codex Astra</p>
     </aside>
   </main>
-  <section id="guide" class="guide-section" aria-label="图纸说明">
-    <details class="reading-note"><summary>这两种图纸有什么区别？</summary><div><p><strong>低指数简明版（Strict）</strong>：从各分量绝对值不超过 3 的候选晶面中按 FCC / BCC 反射条件筛选，将共线的高次反射合并为中心线，并仅标注保留线条形成的部分晶带轴交点。它用于减少视觉负担，不是所有低指数晶向的完整目录。</p><p><strong>Austin P. Day 原图版</strong>：保留所提供图纸中更丰富的线条、色彩与高指数标注。当前 BCC 原图分辨率较低，放大后清晰度受源图限制；可访问作者的作品页面查阅原始资料。</p><p>模型由 18 个正方形面与 8 个三角形面组成，展示预先绘制的图案，不实时计算衍射花样、晶格常数或菊池带强度。</p></div></details>
-  </section>
   <footer id="credits" class="credits-section" aria-labelledby="credits-title">
     <div class="section-intro"><p class="eyebrow">站在分享者的肩膀上</p><h2 id="credits-title">来源、改编与感谢</h2></div>
     <div class="credit-grid">
       <article><p class="credit-role">原始图纸与展开布局</p><h3>Austin P. Day <small class="credit-source">（<a href="https://www.thingiverse.com/thing:969758" target="_blank" rel="noopener" aria-label="查看 Austin P. Day 的作品与原始资料">访问作者作品 ↗</a>）</small></h3><p>本项目参考其 <em>Polyhedral cubic Kikuchi maps</em>，将 FCC / BCC 图纸转为可交互观察的多面体模型。</p></article>
-      <article><p class="credit-role">构思与完善</p><h3>Zhang &amp; Mou</h3><p>本项目的构思与完善受益于 Zhang和Mou。感谢他们在思路、细节与实践层面给予的启发和建议。</p></article>
+      <article><p class="credit-role">构思和启发</p><h3>Zhang &amp; Mou</h3><p>Zhang 和 Mou 为本项目的构思带来了启发。感谢他们在思路、细节与实践层面给予的启发和建议。</p></article>
       <article><p class="credit-role">资料与交流支持</p><h3>Thermo Fisher Scientific NanoPort 团队</h3><p>特别感谢 NanoPort 团队慷慨提供最初的图纸，以及 Dr. Yang 在项目开展过程中给予的协助。</p></article>
       <article><p class="credit-role">教学改编与数字模型 · AI 辅助</p><h3>Codex Astra</h3><p>Codex Astra（OpenAI Codex，AI 辅助工具）协助本项目的低指数中心线重绘、标签与打印排版、多面体建模及网页实现。</p></article>
     </div>
