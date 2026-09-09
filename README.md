@@ -2,7 +2,7 @@
 
 把晶带轴之间的关系，转到眼前。从低指数简明版认识主要晶向，再用 Austin P. Day 原图版探索更多高指数标注。
 
-**[打开轻量交互模型](https://abigalelu.github.io/kikuchi-sphere-teaching/)** · [全清晰视图](https://abigalelu.github.io/kikuchi-sphere-teaching/index-drawings.html)
+**[打开轻量交互模型](https://abigalelu.github.io/kikuchi-sphere-interactive/)** · [全清晰视图](https://abigalelu.github.io/kikuchi-sphere-interactive/index-drawings.html)
 
 ## 如何使用
 

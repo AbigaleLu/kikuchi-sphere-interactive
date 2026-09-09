@@ -174,7 +174,7 @@
   $('face-picker').addEventListener('change',e => setView(data.faces[Number(e.target.value)].hkl));
   $('retry').addEventListener('click',() => loadCurrent());
   function currentViewUrl(page) {
-    const url=new URL(location.protocol==='file:'?'https://abigalelu.github.io/kikuchi-sphere-teaching/index-drawings.html':location.href);url.hash='';url.search='';
+    const url=new URL(location.protocol==='file:'?'https://abigalelu.github.io/kikuchi-sphere-interactive/index-drawings.html':location.href);url.hash='';url.search='';
     if(page) url.pathname=url.pathname.replace(/[^/]*$/,page);
     url.searchParams.set('edition',edition);url.searchParams.set('crystal',model);
     url.searchParams.set('q',q.map(v=>v.toFixed(6)).join(','));url.searchParams.set('zoom',String(Math.round(zoom*100)));
