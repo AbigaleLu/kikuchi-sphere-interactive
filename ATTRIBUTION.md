@@ -18,17 +18,17 @@
 
 ## 低指数简明版：Codex Astra 提供 AI 辅助
 
-网页默认展示 **低指数简明版（Strict）**。这是一份基于 Austin P. Day 图纸和多面体展开布局参考的教学改编，不是 Austin P. Day 的原始 PDF。
+网页默认展示 **低指数简明版（Strict）**。这是一份基于 Austin P. Day 图纸和多面体展开布局参考的交互改编，不是 Austin P. Day 的原始 PDF。
 
-`source/reference.pdf` 是 2026-09-04 完成的 FCC / BCC 两片式 A4 教学图纸：两种结构边长均为 26.404421 mm；FCC 为第 1 页，BCC 为第 2 页；字号统一，负指数使用上横杠。文件名为兼容既有链接而保留。
+`source/reference.pdf` 是 2026-09-04 完成的 FCC / BCC 两片式 A4 交互图纸：两种结构边长均为 26.404421 mm；FCC 为第 1 页，BCC 为第 2 页；字号统一，负指数使用上横杠。文件名为兼容既有链接而保留。
 
 - SHA-256：`87057e4815f465ccb34594c8eeb3d0fa7445db52257c46e0bbd492df73991a9a`
-- `assets/fcc-*.png`、`assets/bcc-*.png` 是该教学 PDF 的面贴图。
+- `assets/fcc-*.png`、`assets/bcc-*.png` 是该交互 PDF 的面贴图。
 - Codex Astra（OpenAI Codex，AI 辅助工具）协助中心线重绘、标签与打印排版、多面体建模和网页实现。该署名说明 AI 辅助工作的来源，不把 AI 描述为原始图纸作者或独立权利人。
 
 主要改编包括：筛选低指数晶面族、将共线高次反射合并为中心线、选择保留中心线交点的晶向标注、重新生成负指数上横杠标签、调整字号、加入无编号胶舌，以及统一 FCC / BCC 的 A4 排版与实体边长。网页进一步进行了几何登记、面贴图映射、交互旋转、单面预览和视图分享。
 
-教学图纸和衍生贴图沿用 **CC BY-NC-SA 3.0**。它们不是所有低指数晶向的完整目录，也不是实时衍射模拟。
+交互图纸和衍生贴图沿用 **CC BY-NC-SA 3.0**。它们不是所有低指数晶向的完整目录，也不是实时衍射模拟。
 
 ## 特别感谢：资料支持与灵感启发
 
@@ -50,6 +50,6 @@
 
 可用于课件中的简短署名：
 
-> 原始图纸与展开布局：Austin P. Day，Polyhedral cubic Kikuchi maps；低指数教学改编与数字模型的 AI 辅助：Codex Astra（OpenAI Codex）。感谢 Thermo Fisher Scientific NanoPort 团队提供最初资料与交流帮助。图纸及衍生贴图：CC BY-NC-SA 3.0。
+> 原始图纸与展开布局：Austin P. Day，Polyhedral cubic Kikuchi maps；低指数交互改编与数字模型的 AI 辅助：Codex Astra（OpenAI Codex）。感谢 Thermo Fisher Scientific NanoPort 团队提供最初资料与交流帮助。图纸及衍生贴图：CC BY-NC-SA 3.0。
 
 在线使用时，请将原作者作品与 CC 许可链接一并保留。

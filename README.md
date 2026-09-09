@@ -1,8 +1,8 @@
-# 菊池球 · FCC / BCC 交互教学模型
+# 菊池球 · FCC / BCC 交互模型
 
 把晶带轴之间的关系，转到眼前。从低指数简明版认识主要晶向，再用 Austin P. Day 原图版探索更多高指数标注。
 
-**[打开轻量教学模型](https://abigalelu.github.io/kikuchi-sphere-teaching/)** · [全清晰视图](https://abigalelu.github.io/kikuchi-sphere-teaching/index-drawings.html)
+**[打开轻量交互模型](https://abigalelu.github.io/kikuchi-sphere-teaching/)** · [全清晰视图](https://abigalelu.github.io/kikuchi-sphere-teaching/index-drawings.html)
 
 ## 如何使用
 
@@ -27,7 +27,7 @@
 
 ## A4 打印
 
-[下载低指数教学图纸](source/reference.pdf)：第 1 页 FCC，第 2 页 BCC，各两片；边长均为 26.404421 mm。A4 横向，按 **100% / 实际大小** 打印，并检查 25 mm 标尺。此 PDF 是本项目的教学改编，文件名仅因链接兼容保留。
+[下载低指数交互图纸](source/reference.pdf)：第 1 页 FCC，第 2 页 BCC，各两片；边长均为 26.404421 mm。A4 横向，按 **100% / 实际大小** 打印，并检查 25 mm 标尺。此 PDF 是本项目的交互改编，文件名仅因链接兼容保留。
 
 ## 本地使用与发布
 
@@ -42,7 +42,7 @@
 | `model-drawings.js` / `model-lite.js` | 几何与贴图对应关系 |
 | `texture-loader-lite.js` | 图片请求取消、释放、格式回退 |
 | `assets/lite/` | 共用图集及无损高清面 |
-| `source/reference.pdf` | 同边长、统一字号的低指数 A4 教学版 |
+| `source/reference.pdf` | 同边长、统一字号的低指数 A4 交互版 |
 | `scripts/sync-lite-page.cjs` | 从主界面同步轻量版 HTML，保持文案一致 |
 | `viewer.js` / `model-data.js` | 保留的历史实现 |
 
@@ -50,11 +50,11 @@
 
 轻量视图只持有当前组合的整体图集和一个高清面。拖动结束后自动补充正面细节，也可点选其它面。更换图纸或结构会取消旧请求并释放已替换的 ImageBitmap；后台停止绘制并释放高清面。支持 WebP 不可用时的 JPEG / PNG 回退，以及 ImageBitmap 不可用时的普通图片解码。
 
-首次默认 FCC **教学版**请求整体图集 438,524 字节 + 初始高清面 15,286 字节，共 **453,810 字节（约 0.454 MB）**。此前公布的 1.74 MB 对应 **Austin P. Day 原图版**默认 FCC，两者是图纸选择不同。
+首次默认 FCC **交互版**请求整体图集 438,524 字节 + 初始高清面 15,286 字节，共 **453,810 字节（约 0.454 MB）**。此前公布的 1.74 MB 对应 **Austin P. Day 原图版**默认 FCC，两者是图纸选择不同。
 
 图集和一个高清面的稳定解码像素量约 9.52 MB；正方形高清面约 9.82 MB。这是像素量估算，不是 iPhone 浏览器实测总内存，还不包含画布、临时解码、缓存和浏览器开销。
 
-全清晰视图按需载入当前组合的 26 张无损高清面，默认 FCC 教学版共 439,342 字节（约 0.439 MB）；其余三套切换时才请求。Austin P. Day 原图版 FCC / BCC 分别约 23.94 MB / 18.21 MB，适合需要同时查看多个面的细节且内存充足的设备。两个入口都共用已发布的 `assets/lite/` 高清资源，没有新增一套重复贴图。轻量版的优势主要是解码内存与首屏等待，不保证每套图纸的网络字节数都小于全清晰视图。
+全清晰视图按需载入当前组合的 26 张无损高清面，默认 FCC 交互版共 439,342 字节（约 0.439 MB）；其余三套切换时才请求。Austin P. Day 原图版 FCC / BCC 分别约 23.94 MB / 18.21 MB，适合需要同时查看多个面的细节且内存充足的设备。两个入口都共用已发布的 `assets/lite/` 高清资源，没有新增一套重复贴图。轻量版的优势主要是解码内存与首屏等待，不保证每套图纸的网络字节数都小于全清晰视图。
 
 ### 资源制作与验证
 
@@ -66,6 +66,6 @@
 
 ## 来源与感谢
 
-原始图纸与布局：**Austin P. Day**。本项目的构思与完善受益于 **Zhang 和 Mou**，感谢他们在思路、细节与实践层面给予的启发和建议。特别感谢 **Thermo Fisher Scientific NanoPort 团队**提供最初图纸，以及 **Dr. Yang**给予协助。教学改编与数字模型的 AI 辅助：**Codex Astra（OpenAI Codex，AI 辅助工具）**。
+原始图纸与布局：**Austin P. Day**。本项目的构思与完善受益于 **Zhang 和 Mou**，感谢他们在思路、细节与实践层面给予的启发和建议。特别感谢 **Thermo Fisher Scientific NanoPort 团队**提供最初图纸，以及 **Dr. Yang**给予协助。交互改编与数字模型的 AI 辅助：**Codex Astra（OpenAI Codex，AI 辅助工具）**。
 
 原作、改编范围、许可、无损资源转换及可引用的简短署名见 [ATTRIBUTION.md](ATTRIBUTION.md)。图纸与衍生贴图遵循 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)。

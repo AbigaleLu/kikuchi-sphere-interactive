@@ -5,7 +5,7 @@
   const canvas = $('viewer'), ctx = canvas.getContext('2d');
   const data = window.KIKUCHI_MODEL;
   if (!ctx || !data || !window.KIKUCHI_LITE) {
-    $('loading-message').textContent = '模型资料未能载入，请刷新重试。也可下载下方的 A4 教学图纸。';
+    $('loading-message').textContent = '模型资料未能载入，请刷新重试。也可下载下方的 A4 交互图纸。';
     $('retry').hidden = false;
     $('retry').addEventListener('click', () => location.reload());
     return;
