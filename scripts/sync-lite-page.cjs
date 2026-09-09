@@ -8,7 +8,7 @@ function replace(from, to) {
   html = html.replace(from, to);
 }
 replace('<title>菊池球 · FCC / BCC 交互教学模型</title>', '<title>菊池球 · FCC / BCC 轻量教学模型</title>');
-replace('<link rel="stylesheet" href="style.css?v=20260908-shared3">', '<link rel="stylesheet" href="style.css?v=20260908-shared3">\n  <link rel="stylesheet" href="style-lite.css">');
+replace('<link rel="stylesheet" href="style.css?v=20260909-alignment1">', '<link rel="stylesheet" href="style.css?v=20260909-alignment1">\n  <link rel="stylesheet" href="style-lite.css">');
 replace('<script src="viewer-drawings.js?v=20260908-shared3" defer></script>', '<script src="texture-loader-lite.js" defer></script>\n  <script src="viewer-lite.js" defer></script>');
 replace('<body class="teaching-app">', '<body class="teaching-app lite-app">');
 replace('id="retry"', 'id="retry-model"');
