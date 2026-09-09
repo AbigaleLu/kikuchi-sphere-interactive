@@ -48,3 +48,6 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 294px;min-height:calc(100s
 .teaching-app .stage-top,.teaching-app .stage-bottom{left:var(--page-gutter);right:var(--page-gutter)}
 .teaching-app .credits-section{padding-left:var(--page-gutter);padding-right:var(--page-gutter);border-top:0}
 @media(max-width:900px){.teaching-app{--page-gutter:20px}}
+
+.usage-stats{margin:16px 0 0;font-size:11px;line-height:1.9;color:var(--muted);font-variant-numeric:tabular-nums}
+.usage-stats>span{display:inline-block}

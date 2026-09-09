@@ -8,8 +8,9 @@ function replace(from, to) {
   html = html.replace(from, to);
 }
 replace('<title>菊池球 · FCC / BCC 交互模型</title>', '<title>菊池球 · FCC / BCC 轻量交互模型</title>');
-replace('<link rel="stylesheet" href="style.css?v=20260909-gradient2">', '<link rel="stylesheet" href="style.css?v=20260909-gradient2">\n  <link rel="stylesheet" href="style-lite.css">');
+replace('<link rel="stylesheet" href="style.css?v=20260909-stats1">', '<link rel="stylesheet" href="style.css?v=20260909-stats1">\n  <link rel="stylesheet" href="style-lite.css">');
 replace('<script src="viewer-drawings.js?v=20260909-wording1" defer></script>', '<script src="texture-loader-lite.js" defer></script>\n  <script src="viewer-lite.js" defer></script>');
+replace('data-goatcounter-settings=\'{"path":"/kikuchi/full"}\'', 'data-goatcounter-settings=\'{"path":"/kikuchi/lite"}\'');
 replace('<body class="teaching-app">', '<body class="teaching-app lite-app">');
 replace('id="retry"', 'id="retry-model"');
 replace('<p class="detail" id="face-description">点选模型表面，查看对应的局部图案。</p>', '<p class="detail" id="face-description">点选模型表面，查看对应的局部图案。</p>\n        <p class="detail" id="detail-status" role="status"></p><button id="retry-detail" class="text-button" type="button" hidden>重试高清图</button>');

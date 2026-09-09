@@ -9,13 +9,14 @@
   <meta property="og:description" content="从低指数简明版开始，在同一视角对照 FCC / BCC 与 Austin P. Day 原图。免费在线交互工具。">
   <meta property="og:type" content="website">
   <title>菊池球 · FCC / BCC 轻量交互模型</title>
-  <link rel="stylesheet" href="style.css?v=20260909-gradient2">
+  <link rel="stylesheet" href="style.css?v=20260909-stats1">
   <link rel="stylesheet" href="style-lite.css">
   <script src="model-drawings.js" defer></script>
   <script src="model-lite.js" defer></script>
   <script src="preview.js?v=1" defer></script>
   <script src="texture-loader-lite.js" defer></script>
   <script src="viewer-lite.js?v=20260908-shared3" defer></script>
+  <script src="usage-stats.js" defer></script>
 </head>
 <body class="teaching-app lite-app">
   <a class="skip-link" href="#controls">跳到模型控制</a>
@@ -59,7 +60,7 @@
       </section>
       <details id="legend-block" class="legend-block"><summary>简明版线条图例 <span>晶面族</span></summary><div id="legend" class="legend"></div><p class="detail">不同晶面族以颜色和线型区分。<br>晶向以 [uvw] 标注；数字上方的横杠表示该指数为负。</p></details>
       <section id="download-block" class="control-block download-block" aria-label="图纸与下载">
-        <h2>图纸下载</h2><div id="source-links"><a class="download-link" href="source/reference.pdf" download="Kikuchi_FCC_BCC_LowIndex_A4.pdf">下载 A4 交互图纸 · PDF</a></div>
+        <h2>图纸下载</h2><div id="source-links"><a class="download-link" href="source/reference.pdf" download="Kikuchi_FCC_BCC_LowIndex_A4.pdf" data-goatcounter-click="download-a4-pdf" data-goatcounter-title="A4 Kikuchi drawing PDF download" data-goatcounter-no-session="1">下载 A4 交互图纸 · PDF</a></div>
       </section>
       <div class="share-block"><button id="share" type="button">复制当前视图链接</button><span id="share-status" role="status"></span><input id="share-fallback" aria-label="当前视图链接，可手动复制" readonly hidden></div>
       <p class="render-note">轻量视图：旋转时使用小图，停下或点选后补充当前面的高清细节。<a href="index-drawings.html" id="render-mode-link">切换全清晰视图 ↗</a></p>
@@ -75,6 +76,8 @@
       <article><p class="credit-role">交互改编与数字模型 · AI 辅助</p><h3>Codex Astra</h3><p>Codex Astra（OpenAI Codex，AI 辅助工具）协助本项目的低指数中心线重绘、标签与打印排版、多面体建模及网页实现。</p></article>
     </div>
     <div class="license-note"><p>原始图纸及基于其改编的图纸、贴图遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="license noopener">CC BY-NC-SA 3.0</a>：署名、非商业性使用、相同方式共享。转载时请保留作者、来源链接、许可与改编说明。致谢不代表作者、OpenAI 或 Thermo Fisher Scientific 对本项目的官方背书。</p><a href="https://github.com/AbigaleLu/kikuchi-sphere-interactive/blob/main/ATTRIBUTION.md" target="_blank" rel="noopener">完整来源说明 ↗</a><a href="https://github.com/AbigaleLu/kikuchi-sphere-interactive/issues" target="_blank" rel="noopener">反馈问题 ↗</a><a href="https://github.com/AbigaleLu/kikuchi-sphere-interactive" target="_blank" rel="noopener">项目源码 ↗</a></div>
+    <p class="usage-stats" id="usage-stats" hidden><span>轻量访问 <span data-usage-path="/kikuchi/lite">0</span></span> · <span>全清晰访问 <span data-usage-path="/kikuchi/full">0</span></span> · <span>图纸下载 <span data-usage-path="download-a4-pdf">0</span></span></p>
   </footer>
+  <script data-goatcounter="https://abigalelu.goatcounter.com/count" data-goatcounter-settings='{"path":"/kikuchi/lite"}' async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
