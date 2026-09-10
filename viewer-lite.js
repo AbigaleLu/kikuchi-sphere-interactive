@@ -123,20 +123,27 @@
     drawPreview();
     schedule();
   }
+  function showProgress(barId,textId,label,p) {
+    const bar=$(barId);bar.hidden=false;
+    const bytes=n=>n>=1048576?(n/1048576).toFixed(2)+' MB':Math.round(n/1024)+' KB';
+    if (p.total>0) {bar.max=p.total;bar.value=Math.min(p.loaded,p.total);} else bar.removeAttribute('value');
+    const amount=p.total>0 ? `${Math.min(100,Math.floor(p.loaded/p.total*100))}% · ${bytes(p.loaded)} / ${bytes(p.total)}` : `已接收 ${bytes(p.loaded)}`;
+    $(textId).textContent=p.phase==='decode' ? `${label}下载完成，正在处理图像…` : p.phase==='stalled' ? `暂未收到新数据，网络可能较慢；仍在等待…（${amount}）` : `${p.fallback?'正在尝试兼容图像 · ':''}${label}下载中：${amount}`;
+  }
   async function loadDetail(index) {
-    detail.clear();
+    detail.clear();$('detail-progress').hidden=true;
     $('retry-detail').hidden=true;
     if (document.hidden || spinning) { $('detail-status').textContent='停止旋转后显示高清图。'; return; }
     const version=loadVersion, current=pack.faces[index];
     $('detail-status').textContent='正在载入此面高清图…';
     drawPreview();schedule();
     try {
-      const image=await detail.load(current.detail,current.fallback);
+      const image=await detail.load(current.detail,current.fallback,p=>showProgress('detail-progress','detail-status','高清图',p));
       if (!image || version!==loadVersion || selected!==index) return;
-      $('detail-status').textContent='高清细节已载入';drawPreview();schedule();
+      $('detail-progress').hidden=true;$('detail-status').textContent='高清细节已载入';drawPreview();schedule();
     } catch(error) {
       if (version!==loadVersion || selected!==index) return;
-      $('detail-status').textContent='高清图暂未载入，仍可旋转查看。';$('retry-detail').hidden=false;
+      $('detail-progress').hidden=true;$('detail-status').textContent=error.message==='下载超时'?'高清图下载超时，可重试；仍可旋转查看。':'高清图暂未载入，仍可旋转查看。';$('retry-detail').hidden=false;
     }
   }
   async function loadModel() {
@@ -145,15 +152,15 @@
     pack=lite.sets[textureKey()];canvas.setAttribute('aria-busy','true');$('face-picker').disabled=true;
     $('loading').hidden=false;$('retry-model').hidden=true;$('retry-detail').hidden=true;
     $('loading-message').textContent=`正在载入 ${model} 球体…`;
-    $('detail-status').textContent='';drawPreview();schedule();
+    $('detail-progress').hidden=true;$('detail-status').textContent='';drawPreview();schedule();
     try {
-      const image=await atlas.load(pack.atlas,pack.fallback);
+      const image=await atlas.load(pack.atlas,pack.fallback,p=>showProgress('loading-progress','loading-message',model+' 球体',p));
       if (!image || version!==loadVersion) return;
       ready=true;$('loading').hidden=true;canvas.setAttribute('aria-busy','false');$('face-picker').disabled=false;
       selectFace(selected===null?frontFace():selected,highlight,true);schedule();
     } catch(error) {
       if (version!==loadVersion) return;
-      canvas.setAttribute('aria-busy','false');$('loading-message').textContent='球体暂未载入，请检查网络后重试。';$('retry-model').hidden=false;
+      $('loading-progress').hidden=true;canvas.setAttribute('aria-busy','false');$('loading-message').textContent=error.message==='下载超时'?'球体下载超时，请检查网络后重试。':'球体加载失败，请检查网络后重试。';$('retry-model').hidden=false;
     }
   }
   function settleFace() {
@@ -187,7 +194,7 @@
     const wasSpinning=spinning;
     spinning=value;lastTime=0;if(value)clearPreset();
     $('spin').setAttribute('aria-pressed',String(value));$('spin').textContent=value?'停止旋转':'自动旋转';schedule();
-    if (value) {clearTimeout(settleTimer);detail.clear();drawPreview();$('detail-status').textContent='停止旋转后显示高清图。';}
+    if (value) {clearTimeout(settleTimer);detail.clear();$('detail-progress').hidden=true;drawPreview();$('detail-status').textContent='停止旋转后显示高清图。';}
     else if(wasSpinning) settleFace();
   }
   function setView(direction) {
@@ -283,7 +290,7 @@
   });
   document.addEventListener('visibilitychange',() => {
     lastTime=0;
-    if (document.hidden) {cancelAnimationFrame(frame);frame=0;clearTimeout(settleTimer);detail.clear();pointers.clear();gestureStart=null;}
+    if (document.hidden) {cancelAnimationFrame(frame);frame=0;clearTimeout(settleTimer);detail.clear();$('detail-progress').hidden=true;pointers.clear();gestureStart=null;}
     else {resize();if (ready && !spinning) selectFace(selected===null?frontFace():selected,highlight);schedule();}
   });
   window.addEventListener('pagehide',() => {loadVersion++;atlas.clear();detail.clear();ready=false;clearTimeout(settleTimer);cancelAnimationFrame(frame);frame=0;});

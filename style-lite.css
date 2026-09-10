@@ -9,3 +9,6 @@
   .lite-app .zoom-control input{height:44px}
   .lite-app .panel{padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
 }
+
+.lite-app progress{display:block;width:100%;height:6px;margin:10px 0 0;accent-color:var(--accent)}
+.lite-app .loading{width:300px;max-width:calc(100% - 40px);font-size:13px}

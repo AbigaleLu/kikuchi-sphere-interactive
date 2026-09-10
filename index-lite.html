@@ -10,12 +10,12 @@
   <meta property="og:type" content="website">
   <title>菊池球 · FCC / BCC 轻量交互模型</title>
   <link rel="stylesheet" href="style.css?v=20260909-stats1">
-  <link rel="stylesheet" href="style-lite.css">
+  <link rel="stylesheet" href="style-lite.css?v=20260910-progress1">
   <script src="model-drawings.js" defer></script>
   <script src="model-lite.js" defer></script>
   <script src="preview.js?v=1" defer></script>
-  <script src="texture-loader-lite.js" defer></script>
-  <script src="viewer-lite.js?v=20260908-shared3" defer></script>
+  <script src="texture-loader-lite.js?v=20260910-progress1" defer></script>
+  <script src="viewer-lite.js?v=20260910-progress1" defer></script>
   <script src="usage-stats.js" defer></script>
 </head>
 <body class="teaching-app lite-app">
@@ -28,7 +28,7 @@
     <section class="stage" aria-label="菊池球三维观察区">
       <div class="stage-top"><div><span class="model-tag" id="model-tag">FCC <span>面心立方</span></span></div><span class="edition-tag" id="edition-tag">低指数简明版</span></div>
       <canvas id="viewer" tabindex="0" aria-label="菊池球模型。拖动或按方向键旋转，滚轮或加减键缩放，点击表面查看图案，Home 键复位。也可在模型控制中选择晶向。" aria-busy="true"></canvas>
-      <div id="loading" class="loading" role="status"><span id="loading-message">正在载入低指数简明版…</span><button id="retry-model" type="button" hidden>重新载入</button></div>
+      <div id="loading" class="loading" role="status"><span id="loading-message">正在载入低指数简明版…</span><progress id="loading-progress" aria-label="球体图集下载进度"></progress><button id="retry-model" type="button" hidden>重新载入</button></div>
       <noscript><p class="loading">请启用 JavaScript 查看交互模型。也可在下方下载 A4 交互图纸。</p></noscript>
       <div class="stage-bottom"><span>拖动旋转 <i>·</i> 双指 / 滚轮缩放 <i>·</i> 点选单面</span><button id="reset" class="reset" type="button" title="快捷键 Home">↺ <span>复位视图</span></button></div>
     </section>
@@ -56,7 +56,7 @@
         <div class="face-preview"><canvas id="face-preview" width="512" height="512" role="img" aria-label="所选晶向的图纸局部"></canvas></div>
         <label for="face-picker" hidden>选择晶向并转到对应面</label><select id="face-picker" disabled hidden><option>正在载入晶向…</option></select>
         <p class="detail" id="face-description">点选模型表面，查看对应的局部图案。</p>
-        <p class="detail" id="detail-status" role="status"></p><button id="retry-detail" class="text-button" type="button" hidden>重试高清图</button>
+        <p class="detail" id="detail-status" role="status"></p><progress id="detail-progress" aria-label="局部高清图下载进度" hidden></progress><button id="retry-detail" class="text-button" type="button" hidden>重试高清图</button>
       </section>
       <details id="legend-block" class="legend-block"><summary>简明版线条图例 <span>晶面族</span></summary><div id="legend" class="legend"></div><p class="detail">不同晶面族以颜色和线型区分。<br>晶向以 [uvw] 标注；数字上方的横杠表示该指数为负。</p></details>
       <section id="download-block" class="control-block download-block" aria-label="图纸与下载">
