@@ -128,7 +128,7 @@
     const bytes=n=>n>=1048576?(n/1048576).toFixed(2)+' MB':Math.round(n/1024)+' KB';
     if (p.total>0) {bar.max=p.total;bar.value=Math.min(p.loaded,p.total);} else bar.removeAttribute('value');
     const amount=p.total>0 ? `${Math.min(100,Math.floor(p.loaded/p.total*100))}% · ${bytes(p.loaded)} / ${bytes(p.total)}` : `已接收 ${bytes(p.loaded)}`;
-    $(textId).textContent=p.phase==='decode' ? `${label}下载完成，正在处理图像…` : p.phase==='stalled' ? `暂未收到新数据，网络可能较慢；仍在等待…（${amount}）` : `${p.fallback?'正在尝试兼容图像 · ':''}${label}下载中：${amount}`;
+    $(textId).textContent=p.phase==='decode' ? '图纸即将加载完成…' : p.phase==='stalled' ? `图纸加载较慢，请稍候…（${amount}）` : `图纸加载进度：${amount}`;
   }
   async function loadDetail(index) {
     detail.clear();$('detail-progress').hidden=true;
