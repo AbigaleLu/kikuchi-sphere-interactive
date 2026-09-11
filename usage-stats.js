@@ -5,7 +5,7 @@
   if (!row) return;
   const nodes=Array.from(row.querySelectorAll('[data-usage-path]'));
   const refreshAfter=5*60*1000;
-  let active=null,lastAttempt=0;
+  let active=null,lastAttempt=0,retryTimer=null,failures=0;
   const hide=()=>{row.hidden=true;if (active) active.abort();};
   async function refresh(force=false) {
     if (document.hidden || navigator.onLine===false || active || (!force && Date.now()-lastAttempt<refreshAfter)) return;
@@ -26,14 +26,20 @@
       }));
       if (controller.signal.aborted || navigator.onLine===false) return;
       nodes.forEach((node,i)=>{node.textContent=counts[i];});row.hidden=false;
-    } catch (_) {hide();}
+      failures=0;clearTimeout(retryTimer);retryTimer=null;
+    } catch (_) {
+      hide();
+      // Recover from a brief connection failure without waiting five minutes.
+      clearTimeout(retryTimer);
+      if (++failures<=2) retryTimer=setTimeout(()=>refresh(true),failures===1?10000:30000);
+    }
     finally {clearTimeout(timeout);active=null;}
   }
   window.addEventListener('offline',hide);
   window.addEventListener('online',()=>refresh(true));
   window.addEventListener('pagehide',hide);
   window.addEventListener('pageshow',e=>{if(e.persisted) refresh(true);});
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden) refresh();});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden) refresh(row.hidden);});
   setInterval(()=>refresh(),refreshAfter);
   refresh(true);
 })();

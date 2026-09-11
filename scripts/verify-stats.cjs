@@ -6,7 +6,7 @@ function harness(){
  const row={hidden:true,querySelectorAll:()=>nodes},win={},doc={},requests=[],timers=new Map();
  let now=1e9,interval,id=0;
  const h={nodes,row,win,doc,requests,values:['13','3','1'],failure:null,advance:()=>now+=300001,tick:()=>interval()};
- const document={hidden:false,getElementById:()=>row,addEventListener:(k,f)=>doc[k]=f};h.document=document;
+ const document={hidden:false,getElementById:()=>row,addEventListener:(k,f)=>doc[k]=f};h.document=document;h.timers=timers;
  const sandbox={document,navigator:{onLine:true},window:{addEventListener:(k,f)=>win[k]=f},AbortController,Date:{now:()=>now},setTimeout:(f,ms)=>{timers.set(++id,f);return id;},clearTimeout:i=>timers.delete(i),setInterval:f=>interval=f,fetch:async(url,options)=>{
   requests.push({url,options});const index=nodes.findIndex(n=>url.includes(encodeURIComponent(n.dataset.usagePath)+'.json'));
   if(h.failure==='network')throw Error('blocked');
@@ -19,3 +19,6 @@ test('visible pages refresh after five minutes; hidden tabs send no periodic req
 test('individual missing paths show zero; disabled, blocked and malformed counters hide the row',async()=>{for(const failure of [1,403,'network','invalid']){const h=harness();await settle();h.failure=failure;h.advance();h.tick();await settle();assert.equal(h.row.hidden,failure!==1);if(failure===1)assert.equal(h.nodes[1].textContent,'0');}});
 test('offline hides the row and online restores fresh totals',async()=>{const h=harness();await settle();h.win.offline();assert(h.row.hidden);h.values=['15','4','2'];h.win.online();await settle();assert(!h.row.hidden);assert.equal(h.nodes[0].textContent,'15');});
 test('page cache restoration refreshes counts without registering a view or event',async()=>{const h=harness();await settle();h.win.pagehide();assert(h.row.hidden);h.win.pageshow({persisted:true});await settle();assert.equal(h.requests.length,6);assert(h.requests.every(r=>r.url.includes('/counter/')));});
+
+test('transient failures retry promptly and recover without a page reload',async()=>{const h=harness();await settle();h.failure='network';h.advance();h.tick();await settle();assert(h.row.hidden);assert.equal(h.timers.size,1);h.failure=null;const retry=[...h.timers.values()][0];h.timers.clear();retry();await settle();assert(!h.row.hidden);assert.equal(h.timers.size,0);});
+test('returning to a hidden counter retries before the five minute interval',async()=>{const h=harness();await settle();h.win.offline();h.doc.visibilitychange();await settle();assert(!h.row.hidden);assert.equal(h.requests.length,6);});
